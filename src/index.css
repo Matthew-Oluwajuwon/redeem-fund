@@ -1,13 +1,104 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: "poppinsBold";
+    src: url("./fonts/Poppins-Bold.ttf") format("truetype");
+    font-style: normal;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@font-face {
+    font-family: "poppinsMedium";
+    src: url("./fonts/Poppins-Medium.ttf") format("truetype");
+    font-style: normal;
+}
+
+.slider1 {
+    height: 42.5rem;
+    width: 100%;
+    background-image: url("./images/slider1.png");
+    overflow: hidden;
+    background-size: cover;
+    background-color: rgba(0,0,0, 0.7);
+    background-blend-mode: multiply;
+    background-repeat: no-repeat;
+}
+
+.slider1 h1 {
+    font-family: poppinsBold;
+}
+
+.slider1 p {
+    font-family: poppinsMedium;
+}
+
+.slider2 {
+    height: 42.5rem;
+    width: 100%;
+    background-image: url("./images/slider2.png");
+    overflow: hidden;
+    background-size: cover;
+    background-color: rgba(0,0,0, 0.7);
+    background-blend-mode: multiply;
+    background-repeat: no-repeat;
+}
+
+.slider2 h1 {
+    font-family: poppinsBold;
+}
+
+.slider2 p {
+    font-family: poppinsMedium;
+}
+
+.slider3 {
+    height: 42.5rem;
+    width: 100%;
+    background-image: url("./images/slider3.png");
+    overflow: hidden;
+    background-size: cover;
+    background-color: rgba(0,0,0, 0.7);
+    background-blend-mode: multiply;
+    background-repeat: no-repeat;
+}
+
+.slider3 h1 {
+    font-family: poppinsBold;
+}
+
+.slider3 p {
+    font-family: poppinsMedium;
+}
+
+
+.ant-carousel .slick-dots li.slick-active button {
+    background-color: #3EB489;
+    height: 18px!important;
+}
+.ant-carousel .slick-dots li button {
+    height: 18px;
+    position: absolute!important;
+    bottom: 50px!important;
+    border-radius: 50%!important;
+}
+
+.footer-background {
+    height: 42.5rem;
+    width: 100%;
+    background-image: url("./images/slider2.png");
+    background-size: cover;
+    background-color: rgba(0,0,0, 0.7);
+    background-blend-mode: multiply;
+    background-repeat: no-repeat;
+    color: white!important;
+}
+
+.ant-btn:hover{
+    background-color: transparent!important;
+    color: #3EB489!important;
+}
+
+.modal-btn {
+    border-color: #3EB489!important;
 }
