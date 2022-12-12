@@ -8,14 +8,16 @@ import { Countries } from "../../shared/component/country-list";
 import { RcFile, UploadFile, UploadProps } from "antd/es/upload";
 
 export const Registration: React.FC = () => {
-  const [showNextRgistrationForm, setShowNextRgistrationForm] =
-    useState<boolean>(false);
+  const [showNextRgistrationForm, setShowNextRgistrationForm] = useState<boolean>(false);
   const [previewImage, setPreviewImage] = useState("");
   const [fileList, setFileList] = useState<UploadFile[]>([]);
+
+  // function responsible for showing profile page on submit of registration page.
   const CompleteRegistration = () => {
     setShowNextRgistrationForm(!showNextRgistrationForm);
   };
 
+  // function to upload file to profile page on registration
   const getBase64 = (file: RcFile): Promise<string> =>
     new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -58,6 +60,9 @@ export const Registration: React.FC = () => {
       />
       <div className="w-full h-auto py-10 bg-[#f2f4f5] flex items-center justify-center">
         <div className="w-[50%] h-auto bg-white py-10 px-20">
+
+          {/* conditionally rendring registration page to show sign up form and profile page on submit of sign up form */}
+
           {!showNextRgistrationForm ? (
             <div>
               <h1 className="text-[#0A2342] text-[1.8rem] mt-5 font-[poppinsBold] text-center">
