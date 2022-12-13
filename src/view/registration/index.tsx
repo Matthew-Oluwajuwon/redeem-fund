@@ -46,7 +46,7 @@ export const Registration: React.FC = () => {
       <Header
         button={
           <div>
-            Already have an account?{" "}
+            Already have an account?{" "}&nbsp;
             <Link
               className="text-[#3EB489] underline"
               to={"/redeem-fund-sign-in"}
