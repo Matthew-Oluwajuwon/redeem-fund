@@ -6,16 +6,39 @@ import { Header } from "../../shared/layout/header";
 import { CaretDownOutlined } from "@ant-design/icons";
 import { Countries } from "../../shared/component/country-list";
 import { RcFile, UploadFile, UploadProps } from "antd/es/upload";
+import { Notify } from "../../shared/notification";
+
+interface UserProps {
+  firstName: string,
+  lastName: string,
+  password: string,
+  confirmPassword: string,
+  email: string
+}
 
 export const Registration: React.FC = () => {
-  const [showNextRgistrationForm, setShowNextRgistrationForm] = useState<boolean>(false);
+  const [showNextRgistrationForm, setShowNextRgistrationForm] =
+    useState<boolean>(false);
   const [previewImage, setPreviewImage] = useState("");
   const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const [userDTO, setUserDTO] = useState({} as any)
 
-  // function responsible for showing profile page on submit of registration page.
-  const CompleteRegistration = () => {
-    setShowNextRgistrationForm(!showNextRgistrationForm);
-  };
+  // function that receives input value and saves it in variable
+  const setRequest = (value: any, key: keyof UserProps) => {
+    setUserDTO({ ...userDTO, [key]: value })
+  }
+  // function that saves 
+  const saveUserDetailsOnLocalStorage = () => {
+    if (!localStorage.getItem("***")) {
+      localStorage.setItem("***", JSON.stringify((userDTO)))
+      setShowNextRgistrationForm(!showNextRgistrationForm);
+      Notify("Registration succesful", true)
+    } else {
+      Notify("User already exist", false)
+      setShowNextRgistrationForm(!showNextRgistrationForm);
+    }
+
+  }
 
   // function to upload file to profile page on registration
   const getBase64 = (file: RcFile): Promise<string> =>
@@ -43,10 +66,13 @@ export const Registration: React.FC = () => {
     </Button>
   );
 
+  const userInfo: UserProps = JSON.parse((localStorage.getItem("***") as string)) as unknown as UserProps
+
   return (
     <div>
       <Header
         button={
+          localStorage.getItem("***") ? <div> {userInfo?.firstName + " " + userInfo?.lastName} </div> : 
           <div>
             Already have an account?{" "}
             <Link
@@ -62,8 +88,7 @@ export const Registration: React.FC = () => {
         <div className="w-[50%] h-auto bg-white py-10 px-20">
 
           {/* conditionally rendring registration page to show sign up form and profile page on submit of sign up form */}
-
-          {!showNextRgistrationForm ? (
+          {!showNextRgistrationForm && !localStorage.getItem("***") ? (
             <div>
               <h1 className="text-[#0A2342] text-[1.8rem] mt-5 font-[poppinsBold] text-center">
                 Sign up
@@ -71,7 +96,7 @@ export const Registration: React.FC = () => {
               <Form
                 layout="vertical"
                 labelCol={{ span: 24 }}
-                onFinish={() => CompleteRegistration()}
+                onFinish={() => saveUserDetailsOnLocalStorage()}
                 className="my-10"
               >
                 <Row gutter={16}>
@@ -84,6 +109,7 @@ export const Registration: React.FC = () => {
                       <Input
                         placeholder="Adam"
                         className="bg-white px-5 h-[2.5rem]"
+                        onChange={(e) => setRequest(e.target.value, "firstName")}
                       />
                     </Form.Item>
                   </Col>
@@ -96,6 +122,7 @@ export const Registration: React.FC = () => {
                       <Input
                         placeholder="John"
                         className="bg-white px-5 h-[2.5rem]"
+                        onChange={(e) => setRequest(e.target.value, "lastName")}
                       />
                     </Form.Item>
                   </Col>
@@ -108,6 +135,7 @@ export const Registration: React.FC = () => {
                       <Input
                         placeholder="example@gmail.com"
                         className="bg-white px-5 h-[2.5rem]"
+                        onChange={(e) => setRequest(e.target.value, "email")}
                       />
                     </Form.Item>
                   </Col>
@@ -120,17 +148,40 @@ export const Registration: React.FC = () => {
                       <Input.Password
                         placeholder="********"
                         className="bg-white px-5 h-[2.5rem]"
+                        onChange={(e) => setRequest(e.target.value, "password")}
                       />
                     </Form.Item>
                   </Col>
                   <Col span={24}>
-                    <Button
-                      htmlType="submit"
-                      type="primary"
-                      className="bg-[#3EB489] w-[30%] font-[poppinsMedium] mx-auto rounded-md hover:border-2 hover:border-[#3EB489] hover:text-[#3EB489] hover:border-solid px-10 text-white py-5 flex items-center justify-center text-md"
+                    <Form.Item
+                      name="confirmPassword"
+                      label={<span>Confirm Password</span>}
+                      rules={[{ required: true }, ({ getFieldValue }) => ({
+                        validator(_, value) {
+                          if (!value || getFieldValue('password') === value) {
+                            return Promise.resolve()
+                          }
+                          return Promise.reject(new Error("password does not match"))
+                        }
+                      })]}
                     >
-                      Submit
-                    </Button>
+                      <Input.Password
+                        placeholder="********"
+                        className="bg-white px-5 h-[2.5rem]"
+                        onChange={(e) => setRequest(e.target.value, "confirmPassword")}
+                      />
+                    </Form.Item>
+                  </Col>
+                  <Col span={24}>
+                    {
+                        <Button
+                          htmlType="submit"
+                          type="primary"
+                          className="bg-[#3EB489] w-[30%] font-[poppinsMedium] mx-auto rounded-md hover:border-2 hover:border-[#3EB489] hover:text-[#3EB489] hover:border-solid px-10 text-white py-5 flex items-center justify-center text-md"
+                        >
+                          Next
+                        </Button>
+                    }
                   </Col>
                 </Row>
               </Form>
