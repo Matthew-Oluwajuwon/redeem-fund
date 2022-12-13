@@ -112,7 +112,10 @@ export const LandingPage: React.FC = () => {
             <NavLink to={"discover"}>About US</NavLink>
             <NavLink to={"discover"}>How it works</NavLink>
             <NavLink to={"discover"}>Contact us</NavLink>
-            <NavLink to={"/redeem-fund-sign-in"}>Sign in</NavLink>
+            {
+              localStorage.getItem("***") ? <NavLink to={"/redeem-fund-registration"}>Profile</NavLink> :
+                <NavLink to={"/redeem-fund-sign-in"}>Sign in</NavLink>
+            }
           </ul>
         }
         button={
