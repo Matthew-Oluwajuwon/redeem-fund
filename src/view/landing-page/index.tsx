@@ -103,6 +103,11 @@ export const LandingPage: React.FC = () => {
     ],
   };
 
+  const stylesForProfile = {
+    color: 'red',
+    fontWeight: '500'
+  }
+
   return (
     <div className="relative overflow-auto">
       <Header
@@ -113,7 +118,14 @@ export const LandingPage: React.FC = () => {
             <NavLink to={"discover"}>How it works</NavLink>
             <NavLink to={"discover"}>Contact us</NavLink>
             {
-              localStorage.getItem("***") ? <NavLink to={"/redeem-fund-registration"}>Profile</NavLink> :
+              localStorage.getItem("***") ?
+                <NavLink
+                  to={"/redeem-fund-registration"}
+                  style={stylesForProfile}
+                >
+                  Profile
+                </NavLink>
+                :
                 <NavLink to={"/redeem-fund-sign-in"}>Sign in</NavLink>
             }
           </ul>
